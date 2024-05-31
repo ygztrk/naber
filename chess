@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satranç Oyna</title>
+    <link rel="stylesheet" href="chessboard-1.0.0.min.css">
+    <style>
+        #board {
+            width: 400px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="board"></div>
+    <script src="chess.js"></script>
+    <script src="chessboard-1.0.0.min.js"></script>
+    <script>
+        var board,
+            game = new Chess();
+
+        var onDragStart = function (source, piece, position, orientation) {
+            if (game.in_checkmate() === true || game.in_draw() === true ||
+                piece.search(/^b/) !== -1) {
+                return false;
+            }
+        };
+
+        var onDrop = function (source, target) {
+            var move = game.move({
+                from: source,
+                to: target,
+                promotion: 'q' // promote to a queen for simplicity
+            });
+
+            if (move === null) return 'snapback';
+
+            updateStatus();
+        };
+
+        var onSnapEnd = function () {
+            board.position(game.fen());
+        };
+
+        var updateStatus = function () {
+            var status = '';
+
+            var moveColor = 'Beyaz';
+            if (game.turn() === 'b') {
+                moveColor = 'Siyah';
+            }
+
+            if (game.in_checkmate() === true) {
+                status = 'Oyun bitti, ' + moveColor + ' mat edildi.';
+            } else if (game.in_draw() === true) {
+                status = 'Oyun berabere.';
+            } else {
+                status = moveColor + ' sırada.';
+
+                if (game.in_check() === true) {
+                    status += ' Şah!';
+                }
+            }
+
+            console.log(status);
+        };
+
+        board = Chessboard('board', {
+            draggable: true,
+            position: 'start',
+            onDragStart: onDragStart,
+            onDrop: onDrop,
+            onSnapEnd: onSnapEnd
+        });
+
+        updateStatus();
+    </script>
+</body>
+</html>
