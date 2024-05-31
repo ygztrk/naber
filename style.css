@@ -12,7 +12,7 @@ body {
     text-align: center;
 }
 
-#datetime, #weather, #exchange-rates {
+#datetime, #chessboard, #exchange-rates {
     margin: 20px 0;
     padding: 10px;
     border: 1px solid #ccc;
