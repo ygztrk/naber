@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bilgi Panosu</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.css" integrity="sha512-PWntFxf2RSuXOi/NRew3Q8AFyWPTI/EXc1BJ1boP+O7yDJLGD7T/KjxfS9IzhzksktFDR63L7Bj5VZYyoctq0Q==" crossorigin="anonymous" />
 </head>
 <body>
     <div class="container">
         <div id="datetime"></div>
-        <div id="weather"></div>
-        <div id="exchange-rates"></div>
+        <div id="chessboard" style="width: 400px"></div>
+        <div id="exchange-rates">Günlük Kur:<br>1 USD = 8.50 TRY<br>1 EUR = 10.00 TRY</div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js" integrity="sha512-HuSBk3Q5xWy/9brHyN2oXMGAKBZlf5cvP14QmyCDWNsMRWud1CZKh5pRjA4/1zkck16mfEYbmx2aKK4ShSqaNg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js" integrity="sha512-AVV03RdnK0aUfjAyINyzzrc44pmZmnl0a2jDtkJgrv4f2C+1bZmz7aT2k9B/JJZm/hI+pDZBgSgChd5CTobGzQ==" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>
 </html>
