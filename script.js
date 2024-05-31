@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     updateDateTime();
-    fetchWeather();
-    fetchExchangeRates();
+    initChessBoard();
 });
 
 function updateDateTime() {
@@ -15,30 +14,23 @@ function updateDateTime() {
     }, 1000);
 }
 
-function fetchWeather() {
-    const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
-    const city = 'Istanbul';
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+function initChessBoard() {
+    const board = Chessboard('chessboard', {
+        draggable: true,
+        dropOffBoard: 'trash',
+        sparePieces: true
+    });
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const weatherElement = document.getElementById('weather');
-            weatherElement.textContent = `Hava Durumu: ${data.weather[0].description}, Sıcaklık: ${data.main.temp}°C`;
-        })
-        .catch(error => console.error('Error fetching weather data:', error));
-}
+    const game = new Chess();
 
-function fetchExchangeRates() {
-    const url = 'https://api.exchangerate-api.com/v4/latest/USD';
+    board.onDrop = function(source, target, piece, newPos, oldPos, orientation) {
+        const move = game.move({
+            from: source,
+            to: target,
+            promotion: 'q' // promote to a queen if possible
+        });
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const exchangeRatesElement = document.getElementById('exchange-rates');
-            const euroRate = data.rates.EUR;
-            const usdRate = data.rates.TRY;
-            exchangeRatesElement.innerHTML = `Günlük Kur:<br>1 USD = ${usdRate} TRY<br>1 EUR = ${euroRate} USD`;
-        })
-        .catch(error => console.error('Error fetching exchange rate data:', error));
+        // illegal move
+        if (move === null) return 'snapback';
+    };
 }
